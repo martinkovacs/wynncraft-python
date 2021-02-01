@@ -1,0 +1,14 @@
+# Local cache
+.cache/
+
+# Build
+build/
+dist/
+wynncraft.egg-info/
+
+# 
+tests/__pycache__/
+tests/cache/__pycache__/
+wynncraft/__pycache__/
+wynncraft/cache/__pycache__/
+wynncraft/utils/__pycache__/
