@@ -9,22 +9,33 @@ import wynncraft
 
 
 def run_cache(id, function, *args):
-    if CacheManager.call_request(id):
+    if CacheManagerInternal.call_request(id):
         exec(f"x = {function}{args}", globals(), globals())
         res = x
     else:
         res = None
 
-    return CacheManager.search_cache(id, res)
+    return CacheManagerInternal.search_cache(id, res)
 
 
 class CacheManager:
+    # User-facing cache manager
+
     try:
         os.chdir(os.path.abspath(os.getcwd()) + "/.cache")
     except FileNotFoundError:
         os.mkdir(os.path.abspath(os.getcwd()) + "/.cache")
         os.chdir(os.path.abspath(os.getcwd()) + "/.cache")
 
+    def delete_cache():
+        for f in [".cache/.cache.json", ".cache-table.json"]:
+            try:
+                os.remove(f)
+            except FileNotFoundError:
+                continue
+
+
+class CacheManagerInternal(CacheManager):
     def read_cache():
         try:
             open(".cache.json")
@@ -74,23 +85,16 @@ class CacheManager:
                 cache.update(data)
                 json.dump(cache, c)
 
-    def delete_cache():
-        for f in [".cache.json", ".cache-table.json"]:
-            try:
-                os.remove(f)
-            except FileNotFoundError:
-                continue
-
     def search_cache(id, res):
         if res:
-            CacheManager.write_cache({id: res})
-            CacheManager.write_cache_table({id: int(time.time()) + utils.constants.CACHE_TIME})
+            CacheManagerInternal.write_cache({id: res})
+            CacheManagerInternal.write_cache_table({id: int(time.time()) + utils.constants.CACHE_TIME})
             return res
         else:
-            return CacheManager.read_cache()[id]
+            return CacheManagerInternal.read_cache()[id]
     
     def call_request(id):
-        cache_table = CacheManager.read_cache_table()
+        cache_table = CacheManagerInternal.read_cache_table()
         return ((not cache_table) or (id not in cache_table) or (cache_table[id] < int(time.time())))
 
     

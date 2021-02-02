@@ -7,3 +7,5 @@ from wynncraft.cache.cache import Player
 from wynncraft.cache.cache import Recipe
 from wynncraft.cache.cache import Search
 from wynncraft.cache.cache import Territory
+
+from wynncraft.cache.cache import CacheManager
