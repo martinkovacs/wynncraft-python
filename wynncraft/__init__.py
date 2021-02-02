@@ -1,3 +1,6 @@
+from wynncraft.utils.constants import DEFAULT_TIMEOUT
+from wynncraft.utils.constants import CACHE_TIME
+
 import wynncraft.cache
 
 from wynncraft.wynncraft import Guild
