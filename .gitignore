@@ -1,12 +1,12 @@
 # Local cache
 .cache/
 
-# Build
+# Build files
 build/
 dist/
 wynncraft.egg-info/
 
-# 
+# Bytecode files
 tests/__pycache__/
 tests/cache/__pycache__/
 wynncraft/__pycache__/
