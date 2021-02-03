@@ -131,17 +131,17 @@ class Ingredient:
 class Item:
     # https://docs.wynncraft.com/Item-API/
 
-    url = URL_V1 + "item"
+    url = URL_V1 + "itemDB"
     
     def database_category(category):
         if category not in CATEGORIES:
             raise ValueError(f"Item.database_category() invaild category: {category}")
 
-        url = Item.url + f"DB&category={category}"
+        url = Item.url + f"&category={category}"
         return utils.request.open(url)
     
     def database_search(name):
-        url = Item.url + f"DB&search={name}"
+        url = Item.url + f"&search={name}"
         return utils.request.open(url)
 
 
