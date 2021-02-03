@@ -84,16 +84,16 @@ wynncraft.Ingredient.search_sprite(arg)
 wynncraft.Ingredient.search_identifications(arg)
 ```
 
-- [search_itemOnlyIDs](https://docs.wynncraft.com/Ingredient-API/#search)
+- [search_item_only_ids](https://docs.wynncraft.com/Ingredient-API/#search)
 ```python
 # Same as Ingredient.search("itemOnlyIDs", arg)
-wynncraft.Ingredient.search_itemOnlyIDs(arg)
+wynncraft.Ingredient.search_item_only_ids(arg)
 ```
 
-- [search_consumableOnlyIDs](https://docs.wynncraft.com/Ingredient-API/#search)
+- [search_consumable_only_ids](https://docs.wynncraft.com/Ingredient-API/#search)
 ```python
 # Same as Ingredient.search("consumableOnlyIDs", arg)
-wynncraft.Ingredient.search_consumableOnlyIDs(arg)
+wynncraft.Ingredient.search_consumable_only_ids(arg)
 ```
 
 ### Item
@@ -180,10 +180,10 @@ wynncraft.Recipe.search_level(arg)
 wynncraft.Recipe.search_durability(arg)
 ```
 
-- [search_healthOrDamage](https://docs.wynncraft.com/Recipe-API/#search)
+- [search_health_or_damage](https://docs.wynncraft.com/Recipe-API/#search)
 ```python
 # Same as Recipe.search("healthOrDamage", arg)
-wynncraft.Recipe.search_healthOrDamage(arg)
+wynncraft.Recipe.search_health_or_damage(arg)
 ```
 
 - [search_duration](https://docs.wynncraft.com/Recipe-API/#search)
@@ -192,10 +192,10 @@ wynncraft.Recipe.search_healthOrDamage(arg)
 wynncraft.Recipe.search_duration(arg)
 ```
 
-- [search_basicDuration](https://docs.wynncraft.com/Recipe-API/#search)
+- [search_basic_duration](https://docs.wynncraft.com/Recipe-API/#search)
 ```python
 # Same as Recipe.search("basicDuration", arg)
-wynncraft.Recipe.search_basicDuration(arg)
+wynncraft.Recipe.search_basic_duration(arg)
 ```
 
 ### Search
