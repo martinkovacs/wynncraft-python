@@ -9,16 +9,19 @@ import wynncraft.cache as cache
 import wynncraft
 
 """
-Some compare tests occasionally fail, while still being correct.
+Some compare tests occasionally could fail.
 Run 'python -m unittest tests.cahce.test_cache.<Failed test class>' to test it again.
 If it repeatedly fails, then please open a pull request on github.
 """
 
 
 def compare(d1, d2):
-    d1.pop("request", d1.pop("timestamp", None))
-    d2.pop("request", d2.pop("timestamp", None))
-    return d1 == d2
+    if "request" in d1:
+        diff = abs(d1["request"]["timestamp"] - d2["request"]["timestamp"])
+    else:
+        diff = abs(d1["timestamp"] - d2["timestamp"])
+    
+    return list(d1.keys()) == list(d2.keys()) and diff < 1000
 
 
 def run_test(function, *args):
@@ -151,16 +154,16 @@ class TestRecipe(unittest.TestCase):
         self.assertTrue(run_test("cache.Recipe.search_durability", "^min<0>,max<100>"))
 
     def test_search_healthOrDamage(self):
-        self.assertTrue(compare(wynncraft.Recipe.search_healthOrDamage("^min<0>,max<100>"), cache.Recipe.search_healthOrDamage("^min<0>,max<100>")))
-        self.assertTrue(run_test("cache.Recipe.search_healthOrDamage", "^min<0>,max<100>"))
+        self.assertTrue(compare(wynncraft.Recipe.search_health_or_damage("^min<0>,max<100>"), cache.Recipe.search_health_or_damage("^min<0>,max<100>")))
+        self.assertTrue(run_test("cache.Recipe.search_health_or_damage", "^min<0>,max<100>"))
 
     def test_search_duration(self):
         self.assertTrue(compare(wynncraft.Recipe.search_duration("^min<0>,max<100>"), cache.Recipe.search_duration("^min<0>,max<100>")))
         self.assertTrue(run_test("cache.Recipe.search_duration", "^min<0>,max<100>"))
 
     def test_search_basicDuration(self):
-        self.assertTrue(compare(wynncraft.Recipe.search_basicDuration("^min<0>,max<100>"), cache.Recipe.search_basicDuration("^min<0>,max<100>")))
-        self.assertTrue(run_test("cache.Recipe.search_basicDuration", "^min<0>,max<100>"))
+        self.assertTrue(compare(wynncraft.Recipe.search_basic_duration("^min<0>,max<100>"), cache.Recipe.search_basic_duration("^min<0>,max<100>")))
+        self.assertTrue(run_test("cache.Recipe.search_basic_duration", "^min<0>,max<100>"))
 
 
 class TestPlayer(unittest.TestCase):
