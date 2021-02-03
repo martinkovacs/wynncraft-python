@@ -93,6 +93,14 @@ class TestNetwork(unittest.TestCase):
         self.assertEqual(type(wynncraft.Network.player_sum()["players_online"]), int)
 
 
+class TestPlayer(unittest.TestCase):
+    def test_stats(self):
+        self.assertEqual(wynncraft.Player.stats("Salted")["code"], 200)
+
+    def test_uuid(self):
+        self.assertEqual(wynncraft.Player.uuid("Salted")["code"], 200)
+
+
 class TestRecipe(unittest.TestCase):
     def test_get(self):
         self.assertEqual(wynncraft.Recipe.get("Boots-1-3")["code"], 200)
@@ -122,8 +130,8 @@ class TestRecipe(unittest.TestCase):
         self.assertRaises(TypeError, wynncraft.Recipe.search_durability, invalid)
 
     def test_search_healthOrDamage(self):
-        self.assertEqual(wynncraft.Recipe.search_healthOrDamage("&min<0>")["code"], 200)
-        self.assertEqual(wynncraft.Recipe.search_healthOrDamage("^min<0>,max<100>")["code"], 200)
+        self.assertEqual(wynncraft.Recipe.search_health_or_damage("&min<0>")["code"], 200)
+        self.assertEqual(wynncraft.Recipe.search_health_or_damage("^min<0>,max<100>")["code"], 200)
         self.assertRaises(TypeError, wynncraft.Recipe.search_healthOrDamage, invalid)
 
     def test_search_duration(self):
@@ -132,17 +140,9 @@ class TestRecipe(unittest.TestCase):
         self.assertRaises(TypeError, wynncraft.Recipe.search_duration, invalid)
 
     def test_search_basicDuration(self):
-        self.assertEqual(wynncraft.Recipe.search_basicDuration("&min<0>")["code"], 200)
-        self.assertEqual(wynncraft.Recipe.search_basicDuration("^min<0>,max<100>")["code"], 200)
+        self.assertEqual(wynncraft.Recipe.search_basic_duration("&min<0>")["code"], 200)
+        self.assertEqual(wynncraft.Recipe.search_basic_duration("^min<0>,max<100>")["code"], 200)
         self.assertRaises(TypeError, wynncraft.Recipe.search_basicDuration, invalid)
-
-
-class TestPlayer(unittest.TestCase):
-    def test_stats(self):
-        self.assertEqual(wynncraft.Player.stats("Salted")["code"], 200)
-
-    def test_uuid(self):
-        self.assertEqual(wynncraft.Player.uuid("Salted")["code"], 200)
 
 
 class TestSearch(unittest.TestCase):
