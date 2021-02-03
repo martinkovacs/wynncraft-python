@@ -198,13 +198,13 @@ class Recipe:
     def search_durability(arg):
         return Recipe.search("durability", arg)
 
-    def search_healthOrDamage(arg):
+    def search_health_or_damage(arg):
         return Recipe.search("healthOrDamage", arg)
 
     def search_duration(arg):
         return Recipe.search("duration", arg)
 
-    def search_basicDuration(arg):
+    def search_basic_duration(arg):
         return Recipe.search("basicDuration", arg)
 
 
