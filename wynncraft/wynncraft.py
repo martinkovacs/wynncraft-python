@@ -52,7 +52,7 @@ class Ingredient:
         raise_error = False
 
         if query not in INGREDIENT_QUERIES:
-            raise TypeError(f"search() invaild query: '{query}'")
+            raise ValueError(f"search() invaild query: '{query}'")
         
         if query == "name":
             pass
@@ -99,7 +99,7 @@ class Ingredient:
             pass
         
         if raise_error:
-            raise TypeError(f"search() invaild argument for {query} query: {arg}")
+            raise ValueError(f"search() invaild argument for {query} query: {arg}")
 
         url += f"{query}/{arg}"
         return utils.request.open(url)
@@ -135,7 +135,7 @@ class Item:
     
     def database_category(category):
         if category not in CATEGORIES:
-            raise TypeError(f"database_category() invaild category: {category}")
+            raise ValueError(f"database_category() invaild category: {category}")
 
         url = Item.url + f"DB&category={category}"
         return utils.request.open(url)
@@ -203,7 +203,7 @@ class Recipe:
         re.IGNORECASE = False
         regex = re.compile(f"^({'|'.join(RECIPE_CATEGORIES)})-\d+-\d+$")
         if not re.fullmatch(regex, name):
-            raise TypeError(f"get() invaild name: {name}")
+            raise ValueError(f"get() invaild name: {name}")
 
         url = Recipe.url + f"get/{name}"
         return utils.request.open(url)
@@ -218,7 +218,7 @@ class Recipe:
         raise_error = False
 
         if query not in RECIPE_QUERIES:
-            raise TypeError(f"search() invaild query: '{query}'")
+            raise ValueError(f"search() invaild query: '{query}'")
 
         if query == "type":
             pass
@@ -239,7 +239,7 @@ class Recipe:
             pass
 
         if raise_error:
-            raise TypeError(f"search() invaild argument for {query} query: {arg}")
+            raise ValueError(f"search() invaild argument for {query} query: {arg}")
 
         url += f"{query}/{arg}"
         return utils.request.open(url)

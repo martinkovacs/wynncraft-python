@@ -25,49 +25,49 @@ class TestIngredient(unittest.TestCase):
         self.assertEqual(wynncraft.Ingredient.list()["code"], 200)
 
     def test_search(self):
-        self.assertRaises(TypeError, wynncraft.Ingredient.search, invalid, "")
+        self.assertRaises(ValueError, wynncraft.Ingredient.search, invalid, "")
     
     def test_search_name(self):
         self.assertEqual(wynncraft.Ingredient.search_name("apple")["code"], 200)
 
     def test_search_tier(self):
         self.assertEqual(wynncraft.Ingredient.search_tier("3")["code"], 200)
-        self.assertRaises(TypeError, wynncraft.Ingredient.search_tier, "100")
+        self.assertRaises(ValueError, wynncraft.Ingredient.search_tier, "100")
 
     def test_search_level(self):
         self.assertEqual(wynncraft.Ingredient.search_level("100")["code"], 200)
-        self.assertRaises(TypeError, wynncraft.Ingredient.search_level, "-1")
+        self.assertRaises(ValueError, wynncraft.Ingredient.search_level, "-1")
 
     def test_search_skills(self):
         self.assertEqual(wynncraft.Ingredient.search_skills("&cooking")["code"], 200)
         self.assertEqual(wynncraft.Ingredient.search_skills("^cooking,armouring")["code"], 200)
-        self.assertRaises(TypeError, wynncraft.Ingredient.search_skills, "cooking")
+        self.assertRaises(ValueError, wynncraft.Ingredient.search_skills, "cooking")
 
     def test_search_sprite(self):
         self.assertEqual(wynncraft.Ingredient.search_sprite("&id<100>")["code"], 200)
         self.assertEqual(wynncraft.Ingredient.search_sprite("^id<100>,damage<100>")["code"], 200)
-        self.assertRaises(TypeError, wynncraft.Ingredient.search_sprite, "id<100>,damage<100>")
+        self.assertRaises(ValueError, wynncraft.Ingredient.search_sprite, "id<100>,damage<100>")
 
     def test_search_identifications(self):
         self.assertEqual(wynncraft.Ingredient.search_identifications("&speed<0;100>")["code"], 200)
         self.assertEqual(wynncraft.Ingredient.search_identifications("^speed<;>,poison<;>")["code"], 200)
-        self.assertRaises(TypeError, wynncraft.Ingredient.search_identifications, "id<100>,damage<100>")
+        self.assertRaises(ValueError, wynncraft.Ingredient.search_identifications, "id<100>,damage<100>")
 
     def test_search_item_only_ids(self):
         self.assertEqual(wynncraft.Ingredient.search_item_only_ids("&strength<100>")["code"], 200)
         self.assertEqual(wynncraft.Ingredient.search_item_only_ids("^strength<100>,defence<100>")["code"], 200)
-        self.assertRaises(TypeError, wynncraft.Ingredient.search_item_only_ids, "strength<100>,defence<100>")
+        self.assertRaises(ValueError, wynncraft.Ingredient.search_item_only_ids, "strength<100>,defence<100>")
 
     def test_search_consumable_only_ids(self):
         self.assertEqual(wynncraft.Ingredient.search_consumable_only_ids("&duration<100>")["code"], 200)
         self.assertEqual(wynncraft.Ingredient.search_consumable_only_ids("^duration<100>,charges<100>")["code"], 200)
-        self.assertRaises(TypeError, wynncraft.Ingredient.search_consumable_only_ids, "duration<100>,charges<100>")
+        self.assertRaises(ValueError, wynncraft.Ingredient.search_consumable_only_ids, "duration<100>,charges<100>")
 
 
 class TestItem(unittest.TestCase):
     def test_database_category(self):
         self.assertEqual(type(wynncraft.Item.database_category("all")["items"]), list)
-        self.assertRaises(TypeError, wynncraft.Item.database_category, invalid)
+        self.assertRaises(ValueError, wynncraft.Item.database_category, invalid)
         
 
     def test_database_search(self):
@@ -104,45 +104,45 @@ class TestPlayer(unittest.TestCase):
 class TestRecipe(unittest.TestCase):
     def test_get(self):
         self.assertEqual(wynncraft.Recipe.get("Boots-1-3")["code"], 200)
-        self.assertRaises(TypeError, wynncraft.Recipe.get, invalid)
+        self.assertRaises(ValueError, wynncraft.Recipe.get, invalid)
     
     def test_list(self):
         self.assertEqual(wynncraft.Recipe.list()["code"], 200)
 
     def test_search(self):
-        self.assertRaises(TypeError, wynncraft.Recipe.search, invalid, "")
+        self.assertRaises(ValueError, wynncraft.Recipe.search, invalid, "")
 
     def test_search_type(self):
         self.assertEqual(wynncraft.Recipe.search_type("boots")["code"], 200)
 
     def test_search_skill(self):
         self.assertEqual(wynncraft.Recipe.search_skill("cooking")["code"], 200)
-        self.assertRaises(TypeError, wynncraft.Recipe.search_skill, invalid)
+        self.assertRaises(ValueError, wynncraft.Recipe.search_skill, invalid)
 
     def test_search_level(self):
         self.assertEqual(wynncraft.Recipe.search_level("&min<0>")["code"], 200)
         self.assertEqual(wynncraft.Recipe.search_level("^min<0>,max<100>")["code"], 200)
-        self.assertRaises(TypeError, wynncraft.Recipe.search_level, invalid)
+        self.assertRaises(ValueError, wynncraft.Recipe.search_level, invalid)
 
     def test_search_durability(self):
         self.assertEqual(wynncraft.Recipe.search_durability("&min<0>")["code"], 200)
         self.assertEqual(wynncraft.Recipe.search_durability("^min<0>,max<100>")["code"], 200)
-        self.assertRaises(TypeError, wynncraft.Recipe.search_durability, invalid)
+        self.assertRaises(ValueError, wynncraft.Recipe.search_durability, invalid)
 
     def test_search_healthOrDamage(self):
         self.assertEqual(wynncraft.Recipe.search_health_or_damage("&min<0>")["code"], 200)
         self.assertEqual(wynncraft.Recipe.search_health_or_damage("^min<0>,max<100>")["code"], 200)
-        self.assertRaises(TypeError, wynncraft.Recipe.search_healthOrDamage, invalid)
+        self.assertRaises(ValueError, wynncraft.Recipe.search_healthOrDamage, invalid)
 
     def test_search_duration(self):
         self.assertEqual(wynncraft.Recipe.search_duration("&min<0>")["code"], 200)
         self.assertEqual(wynncraft.Recipe.search_duration("^min<0>,max<100>")["code"], 200)
-        self.assertRaises(TypeError, wynncraft.Recipe.search_duration, invalid)
+        self.assertRaises(ValueError, wynncraft.Recipe.search_duration, invalid)
 
     def test_search_basicDuration(self):
         self.assertEqual(wynncraft.Recipe.search_basic_duration("&min<0>")["code"], 200)
         self.assertEqual(wynncraft.Recipe.search_basic_duration("^min<0>,max<100>")["code"], 200)
-        self.assertRaises(TypeError, wynncraft.Recipe.search_basicDuration, invalid)
+        self.assertRaises(ValueError, wynncraft.Recipe.search_basicDuration, invalid)
 
 
 class TestSearch(unittest.TestCase):
