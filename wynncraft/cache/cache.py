@@ -22,11 +22,11 @@ class CacheManager:
     # User-facing cache manager
 
     try:
-        os.chdir(os.path.abspath(os.path.dirname(__file__)) + "/.cache")
+        os.chdir(os.path.join(os.path.dirname(__file__), "../../.cache"))
     except FileNotFoundError:
-        os.mkdir(os.path.abspath(os.path.dirname(__file__)) + "/.cache")
-        os.chdir(os.path.abspath(os.path.dirname(__file__)) + "/.cache")
-
+        os.mkdir(os.path.join(os.path.dirname(__file__), "../../.cache"))
+        os.chdir(os.path.join(os.path.dirname(__file__), "../../.cache"))
+    
     def delete_cache():
         for f in [".cache.json", ".cache-table.json"]:
             try:
