@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="wynncraft",
-    version="0.2.0",
+    version="0.2.1",
     author="Martin Kovács",
     author_email="martin.k.kovacs@gmail.com",
     description="A wrapper for the Wynncraft API.",
