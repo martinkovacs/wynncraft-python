@@ -49,12 +49,6 @@ class InternalCacheManager(CacheManager):
                 except json.decoder.JSONDecodeError:
                     return json.loads("{}")
 
-    def write_cache(data):
-        cache = InternalCacheManager.read_cache()
-        with open(".cache.json", "w") as c:
-            cache.update(data)
-            json.dump(cache, c)
-
     def read_cache_table():
         try:
             open(".cache-table.json")
@@ -67,17 +61,22 @@ class InternalCacheManager(CacheManager):
                     return json.loads(c.read())
                 except json.decoder.JSONDecodeError:
                     return json.loads("{}")
+    
+    def dump_json(file, data, new_data):
+        with open(file, "w") as f:
+            data.update(new_data)
+            json.dump(data, f)
 
-    def write_cache_table(data):
-        cache = InternalCacheManager.read_cache_table()
-        with open(".cache-table.json", "w") as c:
-            cache.update(data)
-            json.dump(cache, c)
+    def write_cache_and_table(new_data_cache, new_data_table):
+        cache = InternalCacheManager.read_cache()
+        dump_json(".cache.json", cache, new_data_cache)
+
+        cache_table = InternalCacheManager.read_cache_table()
+        dump_json(".cache-table.json", cache_table, new_data_table)
 
     def search_cache(id, res):
         if res:
-            InternalCacheManager.write_cache({id: res})
-            InternalCacheManager.write_cache_table({id: int(time.time()) + utils.constants.CACHE_TIME})
+            InternalCacheManager.write_cache_and_table({id: res}, {id: int(time.time()) + utils.constants.CACHE_TIME})
             return res
         else:
             return InternalCacheManager.read_cache()[id]
