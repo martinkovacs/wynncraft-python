@@ -69,10 +69,10 @@ class InternalCacheManager(CacheManager):
 
     def write_cache_and_table(new_data_cache, new_data_table):
         cache = InternalCacheManager.read_cache()
-        dump_json(".cache.json", cache, new_data_cache)
+        InternalCacheManager.dump_json(".cache.json", cache, new_data_cache)
 
         cache_table = InternalCacheManager.read_cache_table()
-        dump_json(".cache-table.json", cache_table, new_data_table)
+        InternalCacheManager.dump_json(".cache-table.json", cache_table, new_data_table)
 
     def search_cache(id, res):
         if res:

@@ -132,7 +132,7 @@ class TestRecipe(unittest.TestCase):
     def test_search_healthOrDamage(self):
         self.assertEqual(wynncraft.Recipe.search_health_or_damage("&min<0>")["code"], 200)
         self.assertEqual(wynncraft.Recipe.search_health_or_damage("^min<0>,max<100>")["code"], 200)
-        self.assertRaises(ValueError, wynncraft.Recipe.search_healthOrDamage, invalid)
+        self.assertRaises(ValueError, wynncraft.Recipe.search_health_or_damage, invalid)
 
     def test_search_duration(self):
         self.assertEqual(wynncraft.Recipe.search_duration("&min<0>")["code"], 200)
@@ -142,7 +142,7 @@ class TestRecipe(unittest.TestCase):
     def test_search_basicDuration(self):
         self.assertEqual(wynncraft.Recipe.search_basic_duration("&min<0>")["code"], 200)
         self.assertEqual(wynncraft.Recipe.search_basic_duration("^min<0>,max<100>")["code"], 200)
-        self.assertRaises(ValueError, wynncraft.Recipe.search_basicDuration, invalid)
+        self.assertRaises(ValueError, wynncraft.Recipe.search_basic_duration, invalid)
 
 
 class TestSearch(unittest.TestCase):
