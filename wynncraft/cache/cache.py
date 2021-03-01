@@ -9,13 +9,13 @@ import wynncraft
 
 
 def run_cache(id, function, *args):
-    if CacheManagerInternal.call_request(id):
+    if InternalCacheManager.call_request(id):
         exec(f"x = {function}{args}", globals(), globals())
         res = x
     else:
         res = None
 
-    return CacheManagerInternal.search_cache(id, res)
+    return InternalCacheManager.search_cache(id, res)
 
 
 class CacheManager:
@@ -35,7 +35,7 @@ class CacheManager:
                 continue
 
 
-class CacheManagerInternal(CacheManager):
+class InternalCacheManager(CacheManager):
     def read_cache():
         try:
             open(".cache.json")
@@ -49,17 +49,11 @@ class CacheManagerInternal(CacheManager):
                 except json.decoder.JSONDecodeError:
                     return json.loads("{}")
 
-
     def write_cache(data):
-        cache = {}
-        try:
-            cache = json.loads(open(".cache.json").read())
-        except (FileNotFoundError,json.decoder.JSONDecodeError):
-            cache = {}
-        finally:
-            with open(".cache.json", "w") as c:
-                cache.update(data)
-                json.dump(cache, c)
+        cache = InternalCacheManager.read_cache()
+        with open(".cache.json", "w") as c:
+            cache.update(data)
+            json.dump(cache, c)
 
     def read_cache_table():
         try:
@@ -75,26 +69,21 @@ class CacheManagerInternal(CacheManager):
                     return json.loads("{}")
 
     def write_cache_table(data):
-        cache = {}
-        try:
-            cache = json.loads(open(".cache-table.json").read())
-        except (FileNotFoundError,json.decoder.JSONDecodeError):
-            cache = {}
-        finally:
-            with open(".cache-table.json", "w") as c:
-                cache.update(data)
-                json.dump(cache, c)
+        cache = InternalCacheManager.read_cache_table()
+        with open(".cache-table.json", "w") as c:
+            cache.update(data)
+            json.dump(cache, c)
 
     def search_cache(id, res):
         if res:
-            CacheManagerInternal.write_cache({id: res})
-            CacheManagerInternal.write_cache_table({id: int(time.time()) + utils.constants.CACHE_TIME})
+            InternalCacheManager.write_cache({id: res})
+            InternalCacheManager.write_cache_table({id: int(time.time()) + utils.constants.CACHE_TIME})
             return res
         else:
-            return CacheManagerInternal.read_cache()[id]
+            return InternalCacheManager.read_cache()[id]
     
     def call_request(id):
-        cache_table = CacheManagerInternal.read_cache_table()
+        cache_table = InternalCacheManager.read_cache_table()
         return ((not cache_table) or (id not in cache_table) or (cache_table[id] < int(time.time())))
 
     
