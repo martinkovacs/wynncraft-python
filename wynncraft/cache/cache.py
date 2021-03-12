@@ -8,7 +8,7 @@ import utils.constants
 import wynncraft
 
 
-def run_cache(id, function, *args):
+def get_data(id, function, *args):
     if InternalCacheManager.call_request(id):
         exec(f"x = {function}{args}", globals(), globals())
         res = x
@@ -22,9 +22,10 @@ class CacheManager:
     # User-facing cache manager
 
     try:
-        os.chdir(os.path.join(os.path.dirname(__file__), "../../.cache"))
-    except FileNotFoundError:
         os.mkdir(os.path.join(os.path.dirname(__file__), "../../.cache"))
+    except FileExistsError:
+        pass
+    finally:
         os.chdir(os.path.join(os.path.dirname(__file__), "../../.cache"))
     
     def delete_cache():
@@ -36,73 +37,68 @@ class CacheManager:
 
 
 class InternalCacheManager(CacheManager):
-    def read_cache():
+    def read_json(file):
         try:
-            open(".cache.json")
+            with open(file) as f:
+                pass
         except FileNotFoundError:
-            open(".cache.json", "w")
+            with open(file, "w") as f:
+                json.dump({}, f)
             return json.loads("{}")
         else:
-            with open(".cache.json", "r") as c:
+            with open(file, "r") as f:
                 try:
-                    return json.loads(c.read())
+                    return json.loads(f.read())
                 except json.decoder.JSONDecodeError:
                     return json.loads("{}")
 
+    def read_cache():
+        return InternalCacheManager.read_json(".cache.json")
+
     def read_cache_table():
-        try:
-            open(".cache-table.json")
-        except FileNotFoundError:
-            open(".cache-table.json", "w")
-            return json.loads("{}")
-        else:
-            with open(".cache-table.json", "r") as c:
-                try:
-                    return json.loads(c.read())
-                except json.decoder.JSONDecodeError:
-                    return json.loads("{}")
+        return InternalCacheManager.read_json(".cache-table.json")
     
-    def dump_json(file, data, new_data):
+    def write_json(file, data, new_data):
         with open(file, "w") as f:
             data.update(new_data)
             json.dump(data, f)
 
-    def write_cache_and_table(new_data_cache, new_data_table):
+    def write_cache_and_table(new_cache, new_table):
         cache = InternalCacheManager.read_cache()
-        InternalCacheManager.dump_json(".cache.json", cache, new_data_cache)
+        InternalCacheManager.write_json(".cache.json", cache, new_cache)
 
         cache_table = InternalCacheManager.read_cache_table()
-        InternalCacheManager.dump_json(".cache-table.json", cache_table, new_data_table)
+        InternalCacheManager.write_json(".cache-table.json", cache_table, new_table)
 
     def search_cache(id, res):
         if res:
-            InternalCacheManager.write_cache_and_table({id: res}, {id: int(time.time()) + utils.constants.CACHE_TIME})
+            InternalCacheManager.write_cache_and_table({id: res}, {id: int(time.time())})
             return res
         else:
             return InternalCacheManager.read_cache()[id]
     
     def call_request(id):
         cache_table = InternalCacheManager.read_cache_table()
-        return ((not cache_table) or (id not in cache_table) or (cache_table[id] < int(time.time())))
+        return ((not cache_table) or (id not in cache_table) or (cache_table[id] + utils.constants.CACHE_TIME < int(time.time())))
 
     
 class Guild:
     def list():
-        return run_cache("guild_list", "wynncraft.Guild.list")
+        return get_data("guild_list", "wynncraft.Guild.list")
 
     def stats(name):
-        return run_cache("guild_stats", "wynncraft.Guild.stats", name)
+        return get_data("guild_stats", "wynncraft.Guild.stats", name)
 
 
 class Ingredient:
     def get(name):
-        return run_cache(f"ingredient_get_{name}", "wynncraft.Ingredient.get", name)
+        return get_data(f"ingredient_get_{name}", "wynncraft.Ingredient.get", name)
 
     def list():
-        return run_cache(f"ingredient_list", "wynncraft.Ingredient.list")
+        return get_data(f"ingredient_list", "wynncraft.Ingredient.list")
 
     def search(query, arg):
-        return run_cache(f"ingredient_search_{query}_{arg}", "wynncraft.Ingredient.search", query, arg)
+        return get_data(f"ingredient_search_{query}_{arg}", "wynncraft.Ingredient.search", query, arg)
 
     def search_name(arg):
         return Ingredient.search("name", arg)
@@ -131,48 +127,48 @@ class Ingredient:
 
 class Item:
     def database_category(category):
-        return run_cache(f"item_db_category_{category}", "wynncraft.Item.database_category", category)
+        return get_data(f"item_db_category_{category}", "wynncraft.Item.database_category", category)
 
     def database_search(name):
-        return run_cache(f"item_db_search_{name}", "wynncraft.Item.database_search", name)
+        return get_data(f"item_db_search_{name}", "wynncraft.Item.database_search", name)
 
 
 class Leaderboard:
     def guild(timeframe):
-        return run_cache(f"leaderboard_guild_{timeframe}", "wynncraft.Leaderboard.guild", timeframe)
+        return get_data(f"leaderboard_guild_{timeframe}", "wynncraft.Leaderboard.guild", timeframe)
 
     def player(timeframe):
-        return run_cache(f"leaderboard_player_{timeframe}", "wynncraft.Leaderboard.player", timeframe)
+        return get_data(f"leaderboard_player_{timeframe}", "wynncraft.Leaderboard.player", timeframe)
 
     def pvp(timeframe):
-        return run_cache(f"leaderboard_pvp_{timeframe}", "wynncraft.Leaderboard.pvp", timeframe)
+        return get_data(f"leaderboard_pvp_{timeframe}", "wynncraft.Leaderboard.pvp", timeframe)
 
 
 class Network:
     def server_list():
-        return run_cache("server_list", "wynncraft.Network.server_list")
+        return get_data("server_list", "wynncraft.Network.server_list")
 
     def player_sum():
-        return run_cache("player_sum", "wynncraft.Network.player_sum")
+        return get_data("player_sum", "wynncraft.Network.player_sum")
 
 
 class Player:
     def stats(player):
-        return run_cache("player_stats", "wynncraft.Player.stats", player)
+        return get_data("player_stats", "wynncraft.Player.stats", player)
 
     def uuid(username):
-        return run_cache("player_uuid", "wynncraft.Player.uuid", username)
+        return get_data("player_uuid", "wynncraft.Player.uuid", username)
 
 
 class Recipe:
     def get(name):
-        return run_cache(f"recipe_get_{name}", "wynncraft.Recipe.get", name)
+        return get_data(f"recipe_get_{name}", "wynncraft.Recipe.get", name)
 
     def list():
-        return run_cache("recipe_list", "wynncraft.Recipe.list")
+        return get_data("recipe_list", "wynncraft.Recipe.list")
 
     def search(query, arg):
-        return run_cache(f"recipe_search_{query}_{arg}", "wynncraft.Recipe.search", query, arg)
+        return get_data(f"recipe_search_{query}_{arg}", "wynncraft.Recipe.search", query, arg)
 
     def search_type(arg):
         return Recipe.search("type", arg)
@@ -198,9 +194,9 @@ class Recipe:
 
 class Search:
     def name(name):
-        return run_cache(f"search_{name}", "wynncraft.Search.name", name)
+        return get_data(f"search_{name}", "wynncraft.Search.name", name)
 
 
 class Territory:
     def list():
-        return run_cache("territory_list", "wynncraft.Territory.list")
+        return get_data("territory_list", "wynncraft.Territory.list")
