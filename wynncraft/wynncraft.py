@@ -5,7 +5,6 @@ import utils.request
 
 URL_V1 = utils.constants.URL_V1
 URL_V2 = utils.constants.URL_V2
-DEFAULT_TIMEOUT = utils.constants.DEFAULT_TIMEOUT
 INGREDIENT_QUERIES = utils.constants.INGREDIENT_QUERIES
 SKILLS = utils.constants.SKILLS
 SPRITES = utils.constants.SPRITES
