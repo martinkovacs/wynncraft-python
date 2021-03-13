@@ -1,15 +1,15 @@
 # Constants for the wrapper
 """
-Specifies a timeout in seconds for http request.
-Default: 10
-"""
-DEFAULT_TIMEOUT = 10
-
-"""
 If the data in cache is older than CACHE_TIME seconds, then a new request will be made.
 Default: 300
 """
 CACHE_TIME = 300
+
+"""
+Specifies a timeout in seconds for http request.
+Default: 10
+"""
+TIMEOUT = 10
 
 
 # Constants for rate limiting

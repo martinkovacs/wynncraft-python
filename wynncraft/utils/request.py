@@ -10,7 +10,7 @@ def open(url):
         if char in utils.constants.URL_CODES:
             url = url.replace(char, utils.constants.URL_CODES[char])
     
-    res = urllib.request.urlopen(url, timeout=utils.constants.DEFAULT_TIMEOUT)
+    res = urllib.request.urlopen(url, timeout=utils.constants.TIMEOUT)
 
     utils.rate_limiter.limit(res.info())
 
