@@ -12,6 +12,14 @@ Default: 300
 CACHE_TIME = 300
 
 
+# Constants for rate limiting
+"""
+Enables the rate limiter.
+Default: False
+"""
+RL_ENABLE = True
+
+
 # Constants for communicating Wynncraft API (DO NOT CHANGE!)
 URL_V1 = "https://api.wynncraft.com/public_api.php?action="
 
