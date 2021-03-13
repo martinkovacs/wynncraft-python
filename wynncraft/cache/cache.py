@@ -25,8 +25,8 @@ class CacheManager:
         os.mkdir(os.path.join(os.path.dirname(__file__), "../../.cache"))
     except FileExistsError:
         pass
-    finally:
-        os.chdir(os.path.join(os.path.dirname(__file__), "../../.cache"))
+
+    os.chdir(os.path.join(os.path.dirname(__file__), "../../.cache"))
     
     def delete_cache():
         for f in [".cache.json", ".cache-table.json"]:
@@ -44,13 +44,12 @@ class InternalCacheManager(CacheManager):
         except FileNotFoundError:
             with open(file, "w") as f:
                 json.dump({}, f)
-            return json.loads("{}")
-        else:
-            with open(file, "r") as f:
-                try:
-                    return json.loads(f.read())
-                except json.decoder.JSONDecodeError:
-                    return json.loads("{}")
+        
+        with open(file, "r") as f:
+            try:
+                return json.loads(f.read())
+            except json.decoder.JSONDecodeError:
+                return json.loads("{}")
 
     def read_cache():
         return InternalCacheManager.read_json(".cache.json")
