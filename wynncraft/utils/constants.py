@@ -1,5 +1,10 @@
 # Constants for the wrapper
 """
+Your API key. Not required.
+"""
+API_KEY = ""
+
+"""
 If the data in cache is older than CACHE_TIME seconds, then a new request will be made.
 Default: 300
 """
