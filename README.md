@@ -8,16 +8,31 @@ pip install wynncraft
 ```
 
 # Information
-- **All information returned in JSON format.**<br/><br/>
-- **Constants**<br/>
-  This wrapper has some variables you can change
-  - `CACHE_TIME`: If the data in cache is older than CACHE_TIME seconds, then a new request will be made.
-  - `DEFAULT_TIMEOUT`: Specifies a timeout in seconds for http request.<br/><br/>
+- **All information returned in JSON format.**
 - **How does caching works?**<br/>
   The default funcions don't use cache at all (`wynncraft.Guild.list()`).<br/>You need to use the cache variants (`wynncraft.cache.Guild.list()`). All functions available with this functionality.<br/>
   It will make a request if:
   - **response hasn't been cached**
   - **data in the cache is older than CACHE_TIME**
+- **Constants**<br/>
+  This wrapper has some variables that you could modify.
+  - `API_KEY`: Your API key. Not required.
+  - `CACHE_TIME`: If the data in cache is older than CACHE_TIME seconds, then a new request will be made.
+  - `TIMEOUT`: Specifies a timeout in seconds for http request.
+  
+  Variable(s) for the rate limiter:
+  - `RL_ENABLE`: Enables the rate limiter.
+  
+  For example:
+  ```python
+  import wynncraft
+
+  # Enables the rate limiter
+  wynncraft.RL_ENABLE = True
+
+  # If you can any function too many times, it will delay it.
+  # And you will not exceed your rate limit.
+  ```
 
 # Functions
 ### Guild
