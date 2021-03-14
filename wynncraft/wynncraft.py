@@ -22,11 +22,13 @@ class Guild:
 
     url = URL_V1 + "guild"
     
-    def list():
+    @staticmethod
+	def list():
         url = Guild.url + "List"
         return utils.request.open(url)
     
-    def stats(guild_name):
+    @staticmethod
+	def stats(guild_name):
         url = Guild.url + f"Stats&command={guild_name}"
         return utils.request.open(url)
 
@@ -36,15 +38,18 @@ class Ingredient:
 
     url = URL_V2 + "ingredient/"
 
-    def get(name):
+    @staticmethod
+	def get(name):
         url = Ingredient.url + f"get/{name}"
         return utils.request.open(url)
 
-    def list():
+    @staticmethod
+	def list():
         url = Ingredient.url + "list/"
         return utils.request.open(url)
     
-    def search(query, arg):
+    @staticmethod
+	def search(query, arg):
         url = Ingredient.url + "search/"
 
         raise_error = False
@@ -102,28 +107,36 @@ class Ingredient:
         url += f"{query}/{arg}"
         return utils.request.open(url)
     
-    def search_name(arg):
+    @staticmethod
+	def search_name(arg):
         return Ingredient.search("name", arg)
 
-    def search_tier(arg):
+    @staticmethod
+	def search_tier(arg):
         return Ingredient.search("tier", arg)
 
-    def search_level(arg):
+    @staticmethod
+	def search_level(arg):
         return Ingredient.search("level", arg)
 
-    def search_skills(arg):
+    @staticmethod
+	def search_skills(arg):
         return Ingredient.search("skills", arg)
 
-    def search_sprite(arg):
+    @staticmethod
+	def search_sprite(arg):
         return Ingredient.search("sprite", arg)
 
-    def search_identifications(arg):
+    @staticmethod
+	def search_identifications(arg):
         return Ingredient.search("identifications", arg)
 
-    def search_item_only_ids(arg):
+    @staticmethod
+	def search_item_only_ids(arg):
         return Ingredient.search("itemOnlyIDs", arg)
 
-    def search_consumable_only_ids(arg):
+    @staticmethod
+	def search_consumable_only_ids(arg):
         return Ingredient.search("consumableOnlyIDs", arg)
 
 class Item:
@@ -131,14 +144,16 @@ class Item:
 
     url = URL_V1 + "item"
     
-    def database_category(category):
+    @staticmethod
+	def database_category(category):
         if category not in ITEM_CATEGORIES:
             raise ValueError(f"Item.database_category() invaild category: {category}")
 
         url = Item.url + f"DB&category={category}"
         return utils.request.open(url)
     
-    def database_search(name):
+    @staticmethod
+	def database_search(name):
         url = Item.url + f"DB&search={name}"
         return utils.request.open(url)
 
@@ -148,15 +163,18 @@ class Leaderboard:
 
     url = URL_V1 + "statsLeaderboard"
 
-    def guild(timeframe):
+    @staticmethod
+	def guild(timeframe):
         url = Leaderboard.url + f"&type=guild&timeframe={timeframe}"
         return utils.request.open(url)
     
-    def player(timeframe):
+    @staticmethod
+	def player(timeframe):
         url = Leaderboard.url + f"&type=player&timeframe={timeframe}"
         return utils.request.open(url)
 
-    def pvp(timeframe):
+    @staticmethod
+	def pvp(timeframe):
         url = Leaderboard.url + f"&type=pvp&timeframe={timeframe}"
         return utils.request.open(url)
 
@@ -166,11 +184,13 @@ class Network:
 
     url = URL_V1 + "onlinePlayers"
 
-    def server_list():
+    @staticmethod
+	def server_list():
         url = Network.url
         return utils.request.open(url)
 
-    def player_sum():
+    @staticmethod
+	def player_sum():
         url = Network.url + "Sum"
         return utils.request.open(url)
 
@@ -180,11 +200,13 @@ class Player:
 
     url = URL_V2 + "player/"
 
-    def stats(player):
+    @staticmethod
+	def stats(player):
         url = Player.url + f"{player}/stats"
         return utils.request.open(url)
 
-    def uuid(username):
+    @staticmethod
+	def uuid(username):
         url = Player.url + f"{username}/uuid"
         return utils.request.open(url)
 
@@ -194,7 +216,8 @@ class Recipe:
 
     url = URL_V2 + "recipe/"
     
-    def get(name):
+    @staticmethod
+	def get(name):
         for idx, word in enumerate(RECIPE_CATEGORIES):
             RECIPE_CATEGORIES[idx] = word.capitalize()
         
@@ -206,11 +229,13 @@ class Recipe:
         url = Recipe.url + f"get/{name}"
         return utils.request.open(url)
     
-    def list():
+    @staticmethod
+	def list():
         url = Recipe.url + "/list"
         return utils.request.open(url)
 
-    def search(query, arg):
+    @staticmethod
+	def search(query, arg):
         url = Recipe.url + "search/"
 
         raise_error = False
@@ -242,25 +267,32 @@ class Recipe:
         url += f"{query}/{arg}"
         return utils.request.open(url)
 
-    def search_type(arg):
+    @staticmethod
+	def search_type(arg):
         return Recipe.search("type", arg)
 
-    def search_skill(arg):
+    @staticmethod
+	def search_skill(arg):
         return Recipe.search("skill", arg)
 
-    def search_level(arg):
+    @staticmethod
+	def search_level(arg):
         return Recipe.search("level", arg)
     
-    def search_durability(arg):
+    @staticmethod
+	def search_durability(arg):
         return Recipe.search("durability", arg)
 
-    def search_health_or_damage(arg):
+    @staticmethod
+	def search_health_or_damage(arg):
         return Recipe.search("healthOrDamage", arg)
 
-    def search_duration(arg):
+    @staticmethod
+	def search_duration(arg):
         return Recipe.search("duration", arg)
 
-    def search_basic_duration(arg):
+    @staticmethod
+	def search_basic_duration(arg):
         return Recipe.search("basicDuration", arg)
 
 
@@ -269,7 +301,8 @@ class Search:
 
     url = URL_V1 + "statsSearch"
 
-    def name(name):
+    @staticmethod
+	def name(name):
         url = Search.url + f"&search={name}"
         return utils.request.open(url)
 
@@ -279,6 +312,7 @@ class Territory:
 
     url = URL_V1 + "territoryList"
 
-    def list():
+    @staticmethod
+	def list():
         url = Territory.url
         return utils.request.open(url)
