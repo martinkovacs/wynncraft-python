@@ -118,7 +118,7 @@ CONSUMABLE_ONLY_IDS = [
     "charges"
 ]
 
-CATEGORIES = [
+ITEM_CATEGORIES = [
     "all",
     "boots",
     "bow",

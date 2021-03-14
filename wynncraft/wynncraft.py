@@ -11,7 +11,7 @@ SPRITES = utils.constants.SPRITES
 IDENTIFICATIONS = utils.constants.IDENTIFICATIONS
 ITEM_ONLY_IDS = utils.constants.ITEM_ONLY_IDS
 CONSUMABLE_ONLY_IDS = utils.constants.CONSUMABLE_ONLY_IDS
-CATEGORIES = utils.constants.CATEGORIES
+ITEM_CATEGORIES = utils.constants.ITEM_CATEGORIES
 RECIPE_CATEGORIES = utils.constants.RECIPE_CATEGORIES
 RECIPE_QUERIES = utils.constants.RECIPE_QUERIES
 RECIPE_MIN_MAX = utils.constants.RECIPE_MIN_MAX
@@ -129,17 +129,17 @@ class Ingredient:
 class Item:
     # https://docs.wynncraft.com/Item-API/
 
-    url = URL_V1 + "itemDB"
+    url = URL_V1 + "item"
     
     def database_category(category):
-        if category not in CATEGORIES:
+        if category not in ITEM_CATEGORIES:
             raise ValueError(f"Item.database_category() invaild category: {category}")
 
-        url = Item.url + f"&category={category}"
+        url = Item.url + f"DB&category={category}"
         return utils.request.open(url)
     
     def database_search(name):
-        url = Item.url + f"&search={name}"
+        url = Item.url + f"DB&search={name}"
         return utils.request.open(url)
 
 
