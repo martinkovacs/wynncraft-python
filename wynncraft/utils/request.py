@@ -4,6 +4,8 @@ import urllib.request
 import utils.constants
 import utils.rate_limiter
 
+RateLimiter = utils.rate_limiter.RateLimiter()
+
 
 def open(url):
     for char in url:
@@ -15,8 +17,10 @@ def open(url):
     
     req = urllib.request.Request(url, headers={"apikey": utils.constants.API_KEY})
     
+    RateLimiter.limit()
+
     res = urllib.request.urlopen(req, timeout=utils.constants.TIMEOUT)
-    
-    utils.rate_limiter.limit(res.info())
+
+    RateLimiter.update(res.info())
 
     return json.loads(res.read().decode("utf-8"))
