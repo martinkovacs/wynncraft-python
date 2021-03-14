@@ -7,8 +7,4 @@ dist/
 wynncraft.egg-info/
 
 # Bytecode files
-tests/__pycache__/
-tests/cache/__pycache__/
-wynncraft/__pycache__/
-wynncraft/cache/__pycache__/
-wynncraft/utils/__pycache__/
+__pycache__/
