@@ -9,30 +9,21 @@ pip install wynncraft
 
 # Information
 - **All information returned in JSON format.**
-- **How does caching works?**<br/>
-  The default funcions don't use cache at all (`wynncraft.Guild.list()`).<br/>You need to use the cache variants (`wynncraft.cache.Guild.list()`). All functions available with this functionality.<br/>
-  It will make a request if:
-  - **response hasn't been cached**
-  - **data in the cache is older than CACHE_TIME**
-- **Constants**<br/>
-  This wrapper has some variables that you could modify.
-  - `API_KEY`: Your API key. Not required.
-  - `CACHE_TIME`: If the data in cache is older than CACHE_TIME seconds, then a new request will be made.
-  - `TIMEOUT`: Specifies a timeout in seconds for http request.
-  
-  Variable(s) for the rate limiter:
-  - `RL_ENABLE`: Enables the rate limiter.
-  
-  For example:
-  ```python
-  import wynncraft
+- **For incorrect inputs `ValueError` will be raised.**
+- **How does caching works?**<br>
+  Only the `wynncraft.cache.*` functions will cache the response. If it called, it looks up the cache. If finds a valid cached response and returns it, otherwise it will make a new request, and caches it.<br>
+  A cached response is **not** valid if:
+  - **there isn't a response for that request in cache** or 
+  - **cached response is older than CACHE_TIME**
 
-  # Enables the rate limiter
-  wynncraft.RL_ENABLE = True
-
-  # If you can any function too many times, it will delay it.
-  # And you will not exceed your rate limit.
-  ```
+# Constants
+| Constant     | Type    | Descrpition                                      | Default Value |
+| ------------ | ------- | ------------------------------------------------ | ------------- |
+| `API_KEY`    | String  | Your API key. (Not required, but recommended)    | `""`          |
+| `CACHE_TIME` | Nubmer  | How long does a cached response can be used.     | `300`         |
+| `TIMEOUT`    | Number  | Specifies a timeout in seconds for http request. | `10`          |
+| `RL_ENABLE`  | Boolean | Enables the rate limiter.                        | `True`        |
+<br>
 
 # Functions
 ### Guild
@@ -225,4 +216,4 @@ wynncraft.Search.name("Salted")
 wynncraft.Territory.list()
 ```
 
-**For more documentation see the [Wynncraft API documentation](https://docs.wynncraft.com/).**
+## **For more documentation see the [Wynncraft API documentation](https://docs.wynncraft.com/).**
