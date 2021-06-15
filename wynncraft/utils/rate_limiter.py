@@ -1,6 +1,6 @@
 import time
 
-import utils.constants
+import wynncraft.utils.constants
 
 
 class RateLimiter:
@@ -9,7 +9,7 @@ class RateLimiter:
         self.rl_remaining = 0
 
     def limit(self):
-        if utils.constants.RL_ENABLE:
+        if wynncraft.utils.constants.RL_ENABLE:
             if self.rl_reset > self.rl_remaining:
                 time.sleep(self.rl_reset - self.rl_remaining)
 

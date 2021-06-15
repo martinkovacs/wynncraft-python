@@ -1,11 +1,9 @@
-import os, sys
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../")))
-
 import json
+import os
 import time
 
-import utils.constants
-import wynncraft
+from wynncraft.utils.constants import CACHE_TIME
+import wynncraft.wynncraft
 
 
 def get_data(id, function, *args):
@@ -86,7 +84,7 @@ class InternalCacheManager(CacheManager):
     @staticmethod
     def call_request(id):
         cache_table = InternalCacheManager.read_cache_table()
-        return ((not cache_table) or (id not in cache_table) or (cache_table[id] + utils.constants.CACHE_TIME < int(time.time())))
+        return ((not cache_table) or (id not in cache_table) or (cache_table[id] + wynncraft.utils.constants.CACHE_TIME < int(time.time())))
 
     
 class Guild:

@@ -1,20 +1,20 @@
 import re
 
-import utils.constants
-import utils.request
+import wynncraft.utils.constants
+import wynncraft.utils.request
 
-URL_V1 = utils.constants.URL_V1
-URL_V2 = utils.constants.URL_V2
-INGREDIENT_QUERIES = utils.constants.INGREDIENT_QUERIES
-SKILLS = utils.constants.SKILLS
-SPRITES = utils.constants.SPRITES
-IDENTIFICATIONS = utils.constants.IDENTIFICATIONS
-ITEM_ONLY_IDS = utils.constants.ITEM_ONLY_IDS
-CONSUMABLE_ONLY_IDS = utils.constants.CONSUMABLE_ONLY_IDS
-ITEM_CATEGORIES = utils.constants.ITEM_CATEGORIES
-RECIPE_CATEGORIES = utils.constants.RECIPE_CATEGORIES
-RECIPE_QUERIES = utils.constants.RECIPE_QUERIES
-RECIPE_MIN_MAX = utils.constants.RECIPE_MIN_MAX
+URL_V1 = wynncraft.utils.constants.URL_V1
+URL_V2 = wynncraft.utils.constants.URL_V2
+INGREDIENT_QUERIES = wynncraft.utils.constants.INGREDIENT_QUERIES
+SKILLS = wynncraft.utils.constants.SKILLS
+SPRITES = wynncraft.utils.constants.SPRITES
+IDENTIFICATIONS = wynncraft.utils.constants.IDENTIFICATIONS
+ITEM_ONLY_IDS = wynncraft.utils.constants.ITEM_ONLY_IDS
+CONSUMABLE_ONLY_IDS = wynncraft.utils.constants.CONSUMABLE_ONLY_IDS
+ITEM_CATEGORIES = wynncraft.utils.constants.ITEM_CATEGORIES
+RECIPE_CATEGORIES = wynncraft.utils.constants.RECIPE_CATEGORIES
+RECIPE_QUERIES = wynncraft.utils.constants.RECIPE_QUERIES
+RECIPE_MIN_MAX = wynncraft.utils.constants.RECIPE_MIN_MAX
 
 
 class Guild:
@@ -25,12 +25,12 @@ class Guild:
     @staticmethod
     def list():
         url = Guild.url + "List"
-        return utils.request.get(url)
+        return wynncraft.utils.request.get(url)
     
     @staticmethod
     def stats(guild_name):
         url = Guild.url + f"Stats&command={guild_name}"
-        return utils.request.get(url)
+        return wynncraft.utils.request.get(url)
 
 
 class Ingredient:
@@ -41,12 +41,12 @@ class Ingredient:
     @staticmethod
     def get(name):
         url = Ingredient.url + f"get/{name}"
-        return utils.request.get(url)
+        return wynncraft.utils.request.get(url)
 
     @staticmethod
     def list():
         url = Ingredient.url + "list/"
-        return utils.request.get(url)
+        return wynncraft.utils.request.get(url)
     
     @staticmethod
     def search(query, arg):
@@ -105,7 +105,7 @@ class Ingredient:
             raise ValueError(f"Ingredient.search() invaild argument for {query} query: {arg}")
 
         url += f"{query}/{arg}"
-        return utils.request.get(url)
+        return wynncraft.utils.request.get(url)
     
     @staticmethod
     def search_name(arg):
@@ -150,12 +150,12 @@ class Item:
             raise ValueError(f"Item.database_category() invaild category: {category}")
 
         url = Item.url + f"DB&category={category}"
-        return utils.request.get(url)
+        return wynncraft.utils.request.get(url)
     
     @staticmethod
     def database_search(name):
         url = Item.url + f"DB&search={name}"
-        return utils.request.get(url)
+        return wynncraft.utils.request.get(url)
 
 
 class Leaderboard:
@@ -166,17 +166,17 @@ class Leaderboard:
     @staticmethod
     def guild(timeframe):
         url = Leaderboard.url + f"&type=guild&timeframe={timeframe}"
-        return utils.request.get(url)
+        return wynncraft.utils.request.get(url)
     
     @staticmethod
     def player(timeframe):
         url = Leaderboard.url + f"&type=player&timeframe={timeframe}"
-        return utils.request.get(url)
+        return wynncraft.utils.request.get(url)
 
     @staticmethod
     def pvp(timeframe):
         url = Leaderboard.url + f"&type=pvp&timeframe={timeframe}"
-        return utils.request.get(url)
+        return wynncraft.utils.request.get(url)
 
 
 class Network:
@@ -187,12 +187,12 @@ class Network:
     @staticmethod
     def server_list():
         url = Network.url
-        return utils.request.get(url)
+        return wynncraft.utils.request.get(url)
 
     @staticmethod
     def player_sum():
         url = Network.url + "Sum"
-        return utils.request.get(url)
+        return wynncraft.utils.request.get(url)
 
 
 class Player:
@@ -203,12 +203,12 @@ class Player:
     @staticmethod
     def stats(player):
         url = Player.url + f"{player}/stats"
-        return utils.request.get(url)
+        return wynncraft.utils.request.get(url)
 
     @staticmethod
     def uuid(username):
         url = Player.url + f"{username}/uuid"
-        return utils.request.get(url)
+        return wynncraft.utils.request.get(url)
 
 
 class Recipe:
@@ -227,12 +227,12 @@ class Recipe:
             raise ValueError(f"Recipe.get() invaild name: {name}")
 
         url = Recipe.url + f"get/{name}"
-        return utils.request.get(url)
+        return wynncraft.utils.request.get(url)
     
     @staticmethod
     def list():
         url = Recipe.url + "/list"
-        return utils.request.get(url)
+        return wynncraft.utils.request.get(url)
 
     @staticmethod
     def search(query, arg):
@@ -265,7 +265,7 @@ class Recipe:
             raise ValueError(f"Recipe.search() invaild argument for {query} query: {arg}")
 
         url += f"{query}/{arg}"
-        return utils.request.get(url)
+        return wynncraft.utils.request.get(url)
 
     @staticmethod
     def search_type(arg):
@@ -304,7 +304,7 @@ class Search:
     @staticmethod
     def name(name):
         url = Search.url + f"&search={name}"
-        return utils.request.get(url)
+        return wynncraft.utils.request.get(url)
 
 
 class Territory:
@@ -315,4 +315,4 @@ class Territory:
     @staticmethod
     def list():
         url = Territory.url
-        return utils.request.get(url)
+        return wynncraft.utils.request.get(url)

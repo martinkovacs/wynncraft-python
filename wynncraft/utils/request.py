@@ -1,25 +1,25 @@
 import json
 import urllib.request
 
-import utils.constants
-import utils.rate_limiter
+import wynncraft.utils.constants
+import wynncraft.utils.rate_limiter
 
-RateLimiter = utils.rate_limiter.RateLimiter()
+RateLimiter = wynncraft.utils.rate_limiter.RateLimiter()
 
 
 def get(url):
     for char in url:
-        if char in utils.constants.URL_CODES:
-            url = url.replace(char, utils.constants.URL_CODES[char])
+        if char in wynncraft.utils.constants.URL_CODES:
+            url = url.replace(char, wynncraft.utils.constants.URL_CODES[char])
 
-    if utils.constants.URL_V1 in url:
-        url += f"&apikey={utils.constants.API_KEY}"
+    if wynncraft.utils.constants.URL_V1 in url:
+        url += f"&apikey={wynncraft.utils.constants.API_KEY}"
     
-    req = urllib.request.Request(url, headers={"apikey": utils.constants.API_KEY})
+    req = urllib.request.Request(url, headers={"apikey": wynncraft.utils.constants.API_KEY})
     
     RateLimiter.limit()
 
-    res = urllib.request.urlopen(req, timeout=utils.constants.TIMEOUT)
+    res = urllib.request.urlopen(req, timeout=wynncraft.utils.constants.TIMEOUT)
 
     RateLimiter.update(res.info())
 
