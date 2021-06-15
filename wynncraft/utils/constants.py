@@ -20,9 +20,9 @@ TIMEOUT = 10
 # Constants for rate limiting
 """
 Enables the rate limiter.
-Default: False
+Default: True
 """
-RL_ENABLE = False
+RL_ENABLE = True
 
 
 # Constants for communicating Wynncraft API (DO NOT CHANGE!)
