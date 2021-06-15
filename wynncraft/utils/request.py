@@ -1,7 +1,7 @@
 import json
 import urllib.request
 
-from wynncraft.version import __verison__
+from wynncraft.version import __version__
 import wynncraft.utils.constants
 import wynncraft.utils.rate_limiter
 
@@ -20,7 +20,7 @@ def get(url):
         url,
         headers={
             "apikey": wynncraft.utils.constants.API_KEY,
-            "User-Agent": f"wynncraft-python/{__verison__}"
+            "User-Agent": f"wynncraft-python/{__version__}"
         }
     )
     

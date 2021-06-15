@@ -1,4 +1,4 @@
-from wynncraft.version import __verison__
+from wynncraft.version import __version__
 
 import wynncraft.utils
 
