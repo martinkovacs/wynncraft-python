@@ -1,6 +1,7 @@
 import json
 import urllib.request
 
+from wynncraft.version import __verison__
 import wynncraft.utils.constants
 import wynncraft.utils.rate_limiter
 
@@ -15,7 +16,13 @@ def get(url):
     if wynncraft.utils.constants.URL_V1 in url:
         url += f"&apikey={wynncraft.utils.constants.API_KEY}"
     
-    req = urllib.request.Request(url, headers={"apikey": wynncraft.utils.constants.API_KEY})
+    req = urllib.request.Request(
+        url,
+        headers={
+            "apikey": wynncraft.utils.constants.API_KEY,
+            "User-Agent": f"wynncraft-python/{__verison__}"
+        }
+    )
     
     RateLimiter.limit()
 
