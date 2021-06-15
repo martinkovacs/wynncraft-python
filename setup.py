@@ -3,9 +3,11 @@ import setuptools
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
+exec(open("wynncraft/version.py").read())
+
 setuptools.setup(
     name="wynncraft",
-    version="1.0.1",
+    version=__version__,
     author="Martin Kovács",
     author_email="martin.k.kovacs@gmail.com",
     description="A wrapper for the Wynncraft API.",
