@@ -7,7 +7,7 @@ import utils.rate_limiter
 RateLimiter = utils.rate_limiter.RateLimiter()
 
 
-def open(url):
+def get(url):
     for char in url:
         if char in utils.constants.URL_CODES:
             url = url.replace(char, utils.constants.URL_CODES[char])
