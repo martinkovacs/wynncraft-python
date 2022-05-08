@@ -1,8 +1,11 @@
 from wynncraft.version import __version__
 
-import wynncraft.utils
-
 import wynncraft.cache
+
+from wynncraft.utils import API_KEY
+from wynncraft.utils import CACHE_TIME
+from wynncraft.utils import TIMEOUT
+from wynncraft.utils import RATE_LIMITER
 
 from wynncraft.wynncraft import Guild
 from wynncraft.wynncraft import Ingredient

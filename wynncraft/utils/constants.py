@@ -5,7 +5,7 @@ Your API key. Not required.
 API_KEY = ""
 
 """
-If the data in cache is older than CACHE_TIME seconds, then a new request will be made.
+The time (in seconds) for which the data is valid in the cache
 Default: 300
 """
 CACHE_TIME = 300
@@ -16,16 +16,14 @@ Default: 10
 """
 TIMEOUT = 10
 
-
-# Constants for rate limiting
 """
 Enables the rate limiter.
 Default: True
 """
-RL_ENABLE = True
+RATE_LIMITER = True
 
 
-# Constants for communicating Wynncraft API (DO NOT CHANGE!)
+# Constants for communicating Wynncraft API
 URL_V1 = "https://api.wynncraft.com/public_api.php?action="
 
 URL_V2 = "https://api.wynncraft.com/v2/"
