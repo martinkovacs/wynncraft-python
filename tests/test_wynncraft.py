@@ -181,3 +181,7 @@ class TestExtra(unittest.TestCase):
 
     def test_server_list(self):
         self.assertEqual(type(wynncraft.Extra.server_list()), dict)
+
+class TestCache(unittest.TestCase):
+    def test_delete_cache(self):
+        self.assertIsNone(wynncraft.delete_cache())

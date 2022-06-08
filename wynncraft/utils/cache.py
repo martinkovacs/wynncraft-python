@@ -4,11 +4,12 @@ import time
 
 from wynncraft.utils.constants import CACHE_TIME
 
-PATH = os.path.normpath(f"{os.path.dirname(__file__)}/../../.cache")
+PATH = os.path.normpath(f"{os.path.dirname(__file__)}/../.cache")
 FILEPATH = PATH + "/cache.json"
 
 
 def delete_cache():
+    os.remove(FILEPATH)
     os.rmdir(PATH)
 
 
