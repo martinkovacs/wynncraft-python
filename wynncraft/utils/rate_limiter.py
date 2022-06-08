@@ -14,5 +14,9 @@ class RateLimiter:
                 time.sleep(self.rl_reset - self.rl_remaining)
 
     def update(self, info):
-        self.rl_reset = int(info["RateLimit-Reset"])
-        self.rl_remaining = int(info["RateLimit-Remaining"])
+        try:
+            self.rl_reset = int(info["RateLimit-Reset"])
+            self.rl_remaining = int(info["RateLimit-Remaining"])
+        except TypeError:
+            # Wynncraft v3 and wynntils api don't have these headers
+            pass

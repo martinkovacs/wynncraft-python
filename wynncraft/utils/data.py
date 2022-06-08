@@ -1,11 +1,13 @@
 import wynncraft.utils.cache as cache
 import wynncraft.utils.request as request
-from wynncraft.utils.constants import CACHE_TIME
+from wynncraft.utils.constants import CACHE_TIME, URL_V1, URL_V2, URL_V3, URL_WYNNTILS
 
 def get(url):
-    id = (url.removeprefix("https://api.wynncraft.com/public_api.php?action=")
-             .removeprefix("https://api.wynncraft.com/v2/"))
-    
+    for prefix in [URL_V1, URL_V2, URL_V3, URL_WYNNTILS]:
+        if prefix in url:
+            id = url.replace(prefix, "")
+            break
+
     if CACHE_TIME and cache.exists_valid_data(id):
         return cache.read_json()["data"][id]
     else:

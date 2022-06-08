@@ -36,6 +36,10 @@ URL_V1 = "https://api.wynncraft.com/public_api.php?action="
 
 URL_V2 = "https://api.wynncraft.com/v2/"
 
+URL_V3 = "https://web-api.wynncraft.com/api/v3/"
+
+URL_WYNNTILS = "https://athena.wynntils.com/cache/get/"
+
 URL_CODES = {
     " ": "+",
     "^": "%5E",
