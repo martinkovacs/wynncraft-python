@@ -167,3 +167,17 @@ class TestSearch(unittest.TestCase):
 class TestTerritory(unittest.TestCase):
     def test_list(self):
         self.assertEqual(type(wynncraft.Territory.list()), dict)
+
+
+class TestExtra(unittest.TestCase):
+    def test_latest_news(self):
+        self.assertEqual(type(wynncraft.Extra.latest_news()), list)
+
+    def test_latest_tweets(self):
+        self.assertEqual(type(wynncraft.Extra.latest_tweets()), list)
+
+    def test_gathering_spots(self):
+        self.assertEqual(type(wynncraft.Extra.gathering_spots()), dict)
+
+    def test_server_list(self):
+        self.assertEqual(type(wynncraft.Extra.server_list()), dict)

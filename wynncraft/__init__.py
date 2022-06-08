@@ -15,5 +15,6 @@ from wynncraft.wynncraft import Player
 from wynncraft.wynncraft import Recipe
 from wynncraft.wynncraft import Search
 from wynncraft.wynncraft import Territory
+from wynncraft.wynncraft import Extra
 
 from wynncraft.utils import delete_cache

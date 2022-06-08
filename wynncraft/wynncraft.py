@@ -5,6 +5,8 @@ from wynncraft.utils.constants import (
     REGEX_CHECK,
     URL_V1,
     URL_V2,
+    URL_V3,
+    URL_WYNNTILS,
     INGREDIENT_QUERIES,
     SKILLS,
     SPRITES,
@@ -309,4 +311,39 @@ class Territory:
     @staticmethod
     def list():
         url = Territory.url
+        return data.get(url)
+
+
+class Extra:
+    """
+    A few Wynncraft v3 API endpoints.
+    After official documentation, these will be moved to the appropriate classes.
+    Undocumented, subject to name change or removal.
+    IMPORTANT: These return lists not dicts.
+    """
+
+    @staticmethod
+    def latest_news():
+        url = URL_V3 + "latest-news"
+        return data.get(url)
+
+    @staticmethod
+    def latest_tweets():
+        url = URL_V3 + "latest-tweets"
+        return data.get(url)
+    
+
+    """
+    Wynntils API endpoints (not official).
+    Undocumented, subject to name change or removal.
+    """
+
+    @staticmethod
+    def gathering_spots():
+        url = URL_WYNNTILS + "gatheringSpots"
+        return data.get(url)
+
+    @staticmethod
+    def server_list():
+        url = URL_WYNNTILS + "serverList"
         return data.get(url)
