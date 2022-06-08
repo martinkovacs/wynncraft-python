@@ -1,11 +1,10 @@
-from wynncraft.version import __version__
-
-import wynncraft.cache
+__version__ = "1.1.0"
 
 from wynncraft.utils import API_KEY
 from wynncraft.utils import CACHE_TIME
-from wynncraft.utils import TIMEOUT
 from wynncraft.utils import RATE_LIMITER
+from wynncraft.utils import REGEX_CHECK
+from wynncraft.utils import TIMEOUT
 
 from wynncraft.wynncraft import Guild
 from wynncraft.wynncraft import Ingredient
@@ -16,3 +15,5 @@ from wynncraft.wynncraft import Player
 from wynncraft.wynncraft import Recipe
 from wynncraft.wynncraft import Search
 from wynncraft.wynncraft import Territory
+
+from wynncraft.utils import delete_cache

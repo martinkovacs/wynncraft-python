@@ -11,16 +11,24 @@ Default: 300
 CACHE_TIME = 300
 
 """
-Specifies a timeout in seconds for http request.
-Default: 10
-"""
-TIMEOUT = 10
-
-"""
 Enables the rate limiter.
 Default: True
 """
 RATE_LIMITER = True
+
+"""
+Check the syntax of the argument.
+Only in Ingredient and Recipe queries.
+Raises ValueError if the syntax is wrong.
+Default: True
+"""
+REGEX_CHECK = True
+
+"""
+Specifies a timeout in seconds for http request.
+Default: 10
+"""
+TIMEOUT = 10
 
 
 # Constants for communicating Wynncraft API
@@ -35,7 +43,7 @@ URL_CODES = {
     ">": "%3E"
 }
 
-INGREDIENT_QUERIES =[
+INGREDIENT_QUERIES = [
     "name",
     "tier",
     "level",

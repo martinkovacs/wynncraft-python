@@ -1,20 +1,21 @@
 import re
 
-import wynncraft.utils.constants
-import wynncraft.utils.request
-
-URL_V1 = wynncraft.utils.constants.URL_V1
-URL_V2 = wynncraft.utils.constants.URL_V2
-INGREDIENT_QUERIES = wynncraft.utils.constants.INGREDIENT_QUERIES
-SKILLS = wynncraft.utils.constants.SKILLS
-SPRITES = wynncraft.utils.constants.SPRITES
-IDENTIFICATIONS = wynncraft.utils.constants.IDENTIFICATIONS
-ITEM_ONLY_IDS = wynncraft.utils.constants.ITEM_ONLY_IDS
-CONSUMABLE_ONLY_IDS = wynncraft.utils.constants.CONSUMABLE_ONLY_IDS
-ITEM_CATEGORIES = wynncraft.utils.constants.ITEM_CATEGORIES
-RECIPE_CATEGORIES = wynncraft.utils.constants.RECIPE_CATEGORIES
-RECIPE_QUERIES = wynncraft.utils.constants.RECIPE_QUERIES
-RECIPE_MIN_MAX = wynncraft.utils.constants.RECIPE_MIN_MAX
+import wynncraft.utils.data as data
+from wynncraft.utils.constants import (
+    REGEX_CHECK,
+    URL_V1,
+    URL_V2,
+    INGREDIENT_QUERIES,
+    SKILLS,
+    SPRITES,
+    IDENTIFICATIONS,
+    ITEM_ONLY_IDS,
+    CONSUMABLE_ONLY_IDS,
+    ITEM_CATEGORIES,
+    RECIPE_CATEGORIES,
+    RECIPE_QUERIES,
+    RECIPE_MIN_MAX,
+)
 
 
 class Guild:
@@ -25,12 +26,12 @@ class Guild:
     @staticmethod
     def list():
         url = Guild.url + "List"
-        return wynncraft.utils.request.get(url)
+        return data.get(url)
     
     @staticmethod
     def stats(guild_name):
         url = Guild.url + f"Stats&command={guild_name}"
-        return wynncraft.utils.request.get(url)
+        return data.get(url)
 
 
 class Ingredient:
@@ -41,71 +42,69 @@ class Ingredient:
     @staticmethod
     def get(name):
         url = Ingredient.url + f"get/{name}"
-        return wynncraft.utils.request.get(url)
+        return data.get(url)
 
     @staticmethod
     def list():
         url = Ingredient.url + "list/"
-        return wynncraft.utils.request.get(url)
+        return data.get(url)
     
     @staticmethod
     def search(query, arg):
         url = Ingredient.url + "search/"
 
-        raise_error = False
+        if REGEX_CHECK:
+            raise_error = False
+            
+            if query == "name":
+                pass
 
-        if query not in INGREDIENT_QUERIES:
-            raise ValueError(f"Ingredient.search() invaild query: '{query}'")
+            elif query == "tier":
+                if not (0 <= int(arg) <= 3):
+                    raise_error = True
+
+            elif query == "level":
+                if int(arg) < 0:
+                    raise_error = True
+
+            elif query == "skills":
+                re.IGNORECASE = True
+                regex = re.compile(f"^[&^]({'|'.join(SKILLS)})(,({'|'.join(SKILLS)}))*$")
+                if not re.fullmatch(regex, arg):
+                    raise_error = True
+
+            elif query == "sprite":
+                re.IGNORECASE = False
+                regex = re.compile(f"^[&^](({'|'.join(SPRITES)})<\d+>)(,(({'|'.join(SPRITES)})<\d+>))*$")
+                if not re.fullmatch(regex, arg):
+                    raise_error = True
+
+            elif query == "identifications":
+                re.IGNORECASE = True
+                regex = re.compile(f"^[&^](({'|'.join(IDENTIFICATIONS)})<\d*;\d*>)(,(({'|'.join(IDENTIFICATIONS)})<\d*;\d*>))*$")
+                if not re.fullmatch(regex, arg):
+                    raise_error = True
+
+            elif query == "itemOnlyIDs":
+                re.IGNORECASE = False
+                regex = re.compile(f"^[&^](({'|'.join(ITEM_ONLY_IDS)})<\d+>)(,(({'|'.join(ITEM_ONLY_IDS)})<\d+>))*$")
+                if not re.fullmatch(regex, arg):
+                    raise_error = True
+
+            elif query == "consumableOnlyIDs":
+                re.IGNORECASE = False
+                regex = re.compile(f"^[&^](({'|'.join(CONSUMABLE_ONLY_IDS)})<\d+>)(,(({'|'.join(CONSUMABLE_ONLY_IDS)})<\d+>))*$")
+                if not re.fullmatch(regex, arg):
+                    raise_error = True
+
+            else:
+                raise ValueError(f"Ingredient.search() invaild query: '{query}'")
         
-        if query == "name":
-            pass
-
-        elif query == "tier":
-            if not (0 <= int(arg) <= 3):
-                raise_error = True
-
-        elif query == "level":
-            if int(arg) < 0:
-                raise_error = True
-
-        elif query == "skills":
-            re.IGNORECASE = True
-            regex = re.compile(f"^[&^]({'|'.join(SKILLS)})(,({'|'.join(SKILLS)}))*$")
-            if not re.fullmatch(regex, arg):
-                raise_error = True
-
-        elif query == "sprite":
-            re.IGNORECASE = False
-            regex = re.compile(f"^[&^](({'|'.join(SPRITES)})<\d+>)(,(({'|'.join(SPRITES)})<\d+>))*$")
-            if not re.fullmatch(regex, arg):
-                raise_error = True
-
-        elif query == "identifications":
-            re.IGNORECASE = True
-            regex = re.compile(f"^[&^](({'|'.join(IDENTIFICATIONS)})<\d*;\d*>)(,(({'|'.join(IDENTIFICATIONS)})<\d*;\d*>))*$")
-            if not re.fullmatch(regex, arg):
-                raise_error = True
-
-        elif query == "itemOnlyIDs":
-            re.IGNORECASE = False
-            regex = re.compile(f"^[&^](({'|'.join(ITEM_ONLY_IDS)})<\d+>)(,(({'|'.join(ITEM_ONLY_IDS)})<\d+>))*$")
-            if not re.fullmatch(regex, arg):
-                raise_error = True
-
-        elif query == "consumableOnlyIDs":
-            re.IGNORECASE = False
-            regex = re.compile(f"^[&^](({'|'.join(CONSUMABLE_ONLY_IDS)})<\d+>)(,(({'|'.join(CONSUMABLE_ONLY_IDS)})<\d+>))*$")
-            if not re.fullmatch(regex, arg):
-                raise_error = True
-
-        else:
-            pass
-        
-        if raise_error:
-            raise ValueError(f"Ingredient.search() invaild argument for {query} query: {arg}")
+            if raise_error:
+                raise ValueError(f"Ingredient.search() invaild argument for {query} query: {arg}")
 
         url += f"{query}/{arg}"
-        return wynncraft.utils.request.get(url)
+        return data.get(url)
     
     @staticmethod
     def search_name(arg):
@@ -150,12 +149,12 @@ class Item:
             raise ValueError(f"Item.database_category() invaild category: {category}")
 
         url = Item.url + f"DB&category={category}"
-        return wynncraft.utils.request.get(url)
+        return data.get(url)
     
     @staticmethod
     def database_search(name):
         url = Item.url + f"DB&search={name}"
-        return wynncraft.utils.request.get(url)
+        return data.get(url)
 
 
 class Leaderboard:
@@ -166,17 +165,17 @@ class Leaderboard:
     @staticmethod
     def guild(timeframe):
         url = Leaderboard.url + f"&type=guild&timeframe={timeframe}"
-        return wynncraft.utils.request.get(url)
+        return data.get(url)
     
     @staticmethod
     def player(timeframe):
         url = Leaderboard.url + f"&type=player&timeframe={timeframe}"
-        return wynncraft.utils.request.get(url)
+        return data.get(url)
 
     @staticmethod
     def pvp(timeframe):
         url = Leaderboard.url + f"&type=pvp&timeframe={timeframe}"
-        return wynncraft.utils.request.get(url)
+        return data.get(url)
 
 
 class Network:
@@ -187,12 +186,12 @@ class Network:
     @staticmethod
     def server_list():
         url = Network.url
-        return wynncraft.utils.request.get(url)
+        return data.get(url)
 
     @staticmethod
     def player_sum():
         url = Network.url + "Sum"
-        return wynncraft.utils.request.get(url)
+        return data.get(url)
 
 
 class Player:
@@ -203,12 +202,12 @@ class Player:
     @staticmethod
     def stats(player):
         url = Player.url + f"{player}/stats"
-        return wynncraft.utils.request.get(url)
+        return data.get(url)
 
     @staticmethod
     def uuid(username):
         url = Player.url + f"{username}/uuid"
-        return wynncraft.utils.request.get(url)
+        return data.get(url)
 
 
 class Recipe:
@@ -218,54 +217,49 @@ class Recipe:
     
     @staticmethod
     def get(name):
-        for idx, word in enumerate(RECIPE_CATEGORIES):
-            RECIPE_CATEGORIES[idx] = word.capitalize()
-        
         re.IGNORECASE = False
-        regex = re.compile(f"^({'|'.join(RECIPE_CATEGORIES)})-\d+-\d+$")
+        regex = re.compile(f"^({'|'.join(cat.capitalize() for cat in RECIPE_CATEGORIES)})-\d+-\d+$")
         if not re.fullmatch(regex, name):
             raise ValueError(f"Recipe.get() invaild name: {name}")
 
         url = Recipe.url + f"get/{name}"
-        return wynncraft.utils.request.get(url)
+        return data.get(url)
     
     @staticmethod
     def list():
-        url = Recipe.url + "/list"
-        return wynncraft.utils.request.get(url)
+        url = Recipe.url + "list"
+        return data.get(url)
 
     @staticmethod
     def search(query, arg):
         url = Recipe.url + "search/"
 
-        raise_error = False
+        if REGEX_CHECK:
+            raise_error = False
 
-        if query not in RECIPE_QUERIES:
-            raise ValueError(f"Recipe.search() invaild query: '{query}'")
+            if query == "type":
+                pass
 
-        if query == "type":
-            pass
+            elif query == "skill":
+                re.IGNORECASE = True
+                regex = re.compile(f"({'|'.join(SKILLS)})")
+                if not re.fullmatch(regex, arg):
+                    raise_error = True
+            
+            elif query in ["level", "durability", "healthOrDamage", "duration", "basicDuration"]:
+                re.IGNORECASE = False
+                regex = re.compile(f"^[&^](({'|'.join(RECIPE_MIN_MAX)})<\d+>)(,(({'|'.join(RECIPE_MIN_MAX)})<\d+>))*$")
+                if not re.fullmatch(regex, arg):
+                    raise_error = True
+            
+            else:
+                raise ValueError(f"Recipe.search() invaild query: '{query}'")
 
-        elif query == "skill":
-            re.IGNORECASE = True
-            regex = re.compile(f"({'|'.join(SKILLS)})")
-            if not re.fullmatch(regex, arg):
-                raise_error = True
-        
-        elif query in ["level", "durability", "healthOrDamage", "duration", "basicDuration"]:
-            re.IGNORECASE = False
-            regex = re.compile(f"^[&^](({'|'.join(RECIPE_MIN_MAX)})<\d+>)(,(({'|'.join(RECIPE_MIN_MAX)})<\d+>))*$")
-            if not re.fullmatch(regex, arg):
-                raise_error = True
-        
-        else:
-            pass
-
-        if raise_error:
-            raise ValueError(f"Recipe.search() invaild argument for {query} query: {arg}")
+            if raise_error:
+                raise ValueError(f"Recipe.search() invaild argument for {query} query: {arg}")
 
         url += f"{query}/{arg}"
-        return wynncraft.utils.request.get(url)
+        return data.get(url)
 
     @staticmethod
     def search_type(arg):
@@ -304,7 +298,7 @@ class Search:
     @staticmethod
     def name(name):
         url = Search.url + f"&search={name}"
-        return wynncraft.utils.request.get(url)
+        return data.get(url)
 
 
 class Territory:
@@ -315,4 +309,4 @@ class Territory:
     @staticmethod
     def list():
         url = Territory.url
-        return wynncraft.utils.request.get(url)
+        return data.get(url)
