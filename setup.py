@@ -1,9 +1,9 @@
 import setuptools
 
+from wynncraft import __version__
+
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
-
-exec(open("wynncraft/version.py").read())
 
 setuptools.setup(
     name="wynncraft",
