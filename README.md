@@ -1,5 +1,5 @@
 # wynncraft-python
-A wrapper for the Wynncraft API, with local caching.
+A simple wrapper for the Wynncraft API, with caching.
 
 # Install
 Requires at least python 3.6
@@ -9,20 +9,18 @@ pip install wynncraft
 
 # Information
 - **All information returned in JSON format.**
-- **For incorrect inputs `ValueError` will be raised.**
-- **How does caching works?**<br>
-  Only the `wynncraft.cache.*` functions will cache the response. If it called, it looks up the cache. If finds a valid cached response and returns it, otherwise it will make a new request, and caches it.<br>
-  A cached response is **not** valid if:
-  - **there isn't a response for that request in cache** or 
-  - **cached response is older than CACHE_TIME**
+- **For incorrect inputs `ValueError` is raised.**
+- **To disable caching, set `CACHE_TIME` to `0`**
 
 # Constants
-| Constant     | Type    | Descrpition                                      | Default Value |
-| ------------ | ------- | ------------------------------------------------ | ------------- |
-| `API_KEY`    | String  | Your API key. (Not required, but recommended)    | `""`          |
-| `CACHE_TIME` | Nubmer  | How long does a cached response can be used.     | `300`         |
-| `TIMEOUT`    | Number  | Specifies a timeout in seconds for http request. | `10`          |
-| `RL_ENABLE`  | Boolean | Enables the rate limiter.                        | `True`        |
+| Constant        | Type    | Descrpition                                      | Default Value |
+| --------------- | ------- | ------------------------------------------------ | ------------- |
+| `API_KEY`       | String  | Your API key. (Not required, but recommended)    | `""`          |
+| `CACHE_TIME`    | Nubmer  | How long does a cached response is usable.       | `300`         |
+| `RATE_LIMITER`  | Boolean | Enables the rate limiter.                        | `True`        |
+| `REGEX_CHECK`   | Boolean | Checks the syntax of the argument.               | `True`        |
+| `TIMEOUT`       | Number  | Specifies a timeout in seconds for http request. | `10`          |
+
 <br>
 
 # Functions
@@ -108,6 +106,7 @@ wynncraft.Ingredient.search_consumable_only_ids(arg)
 # Valid categories: all, boots, bow, bracelet, chestplate, dagger, helmet, leggings, necklace, ring, spear, wand
 wynncraft.Item.database_category(all)
 ```
+
 - [database_search](https://docs.wynncraft.com/Item-API/#database)
 ```python
 wynncraft.Item.database_search("Idol")
@@ -118,10 +117,12 @@ wynncraft.Item.database_search("Idol")
 ```python
 wynncraft.Leaderboard.guild(timeframe)
 ```
+
 - [player](https://docs.wynncraft.com/Leaderboard-API/#player)
 ```python
 wynncraft.Leaderboard.player(timeframe)
 ```
+
 - [pvp](https://docs.wynncraft.com/Leaderboard-API/#pvp)
 ```python
 wynncraft.Leaderboard.pvp(timeframe)
@@ -132,6 +133,7 @@ wynncraft.Leaderboard.pvp(timeframe)
 ```python
 wynncraft.Network.server_list()
 ```
+
 - [player_sum](https://docs.wynncraft.com/Network-API/#player-sum)
 ```python
 wynncraft.Network.player_sum()
@@ -142,6 +144,7 @@ wynncraft.Network.player_sum()
 ```python
 wynncraft.Player.stats("Salted")
 ```
+
 - [uuid](https://docs.wynncraft.com/Player-API/#uuid)
 ```python
 wynncraft.Player.uuid("Salted")
@@ -152,10 +155,12 @@ wynncraft.Player.uuid("Salted")
 ```python
 wynncraft.Recipe.get("Boots-1-3")
 ```
+
 - [list](https://docs.wynncraft.com/Recipe-API/#list)
 ```python
 wynncraft.Recipe.list()
 ```
+
 - [search](https://docs.wynncraft.com/Recipe-API/#search)
 ```python
 # Valid queries: type, skill, level, durability, healthOrDamage, duration, basicDuration
@@ -214,6 +219,33 @@ wynncraft.Search.name("Salted")
 - [list](https://docs.wynncraft.com/Territory-API/#list)
 ```python
 wynncraft.Territory.list()
+```
+
+### Extra
+#### Wynncraft v3 API endpoints
+After official documentation, these will be moved to the appropriate classes. Undocumented, subject to name change or removal. **These return lists not dicts.**
+
+- [latest_news](https://web-api.wynncraft.com/api/v3/latest-news)
+```python
+wynncraft.Extra.latest_news()
+```
+
+- [latest_tweets](https://web-api.wynncraft.com/api/v3/latest-tweets)
+```python
+wynncraft.Extra.latest_tweets()
+```
+
+#### Wynntils API endpoints (not official)
+Undocumented, subject to name change or removal.
+
+- [gathering_spots](https://athena.wynntils.com/cache/get/gatheringSpots)
+```python
+wynncraft.Extra.gathering_spots()
+```
+
+- [server_list](https://athena.wynntils.com/cache/get/serverList)
+```python
+wynncraft.Extra.server_list()
 ```
 
 ## **For more documentation see the [Wynncraft API documentation](https://docs.wynncraft.com/).**
